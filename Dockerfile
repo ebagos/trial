@@ -5,6 +5,7 @@ ARG PORT
 WORKDIR /src
 COPY ./$TARGET /src/
 
+RUN echo $TARGET $PORT
 RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w" -o /outputs/$TARGET
 
 FROM alpine:3.15
