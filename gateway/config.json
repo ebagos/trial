@@ -1,0 +1,10 @@
+[
+    {
+        "path": "/read",
+        "url": "http://localhost:8081/"
+    },
+    {
+        "path": "/write",
+        "url": "http://localhost:8082/"
+    }
+]
