@@ -17,13 +17,15 @@ jobs:
   build_and_push:
     strategy:
       matrix:
-        include:
-          - target: gateway
-            port: 8080
-          - target: read
-            port: 8081
-          - target: write
-            port: 8082
+        target: [gateway, read, write]
+        os: [ubuntu-latest]
+#        include:
+#          - target: gateway
+#            port: 8080
+#          - target: read
+#            port: 8081
+#          - target: write
+#            port: 8082
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -76,7 +78,7 @@ jobs:
             ghcr.io/${{ github.repository }}/${{ matrix.target }}:latest
           build-args: |
             TARGET: ${{ matrix.target }}
-            PORT: ${{ matrix.port }}
+            PORT: 80
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
