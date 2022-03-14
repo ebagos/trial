@@ -24,16 +24,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: Cache Docker Layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ github.ref }}-${{ github.sha }}
-          restore-keys: |
-            ${{ github.ref }}-${{ github.sha }}
-            ${{ github.ref }}
-            refs/head/main
-
       - name: Setup Docker Buildx
         id: buildx 
         uses: docker/setup-buildx-action@v1
@@ -74,8 +64,3 @@ jobs:
             PORT: 80
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
-
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
