@@ -1,7 +1,7 @@
 FROM golang:1.17.8-alpine3.15 AS build
 
 ARG target
-ARG PORT
+ARG port
 ENV TARGET=${target}
 ENV PORT=${port}
 WORKDIR /src
