@@ -5,10 +5,9 @@ ARG port
 ENV TARGET=${target}
 ENV PORT=${port}
 WORKDIR /src
-COPY ./${TARGET} /src/
+COPY ./$TARGET /src/
 
-RUN echo $TARGET $PORT
-RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w" -o /outputs/gateway
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w" -o /outputs/$TARGET
 
 FROM alpine:3.15
 WORKDIR /app
