@@ -1,7 +1,9 @@
 FROM golang:1.17.8-alpine3.15 AS build
 
-ARG TARGET
+ARG target
 ARG PORT
+ENV TARGET=${target}
+ENV PORT=${port}
 WORKDIR /src
 COPY ./$TARGET /src/
 
