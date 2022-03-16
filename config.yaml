@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: config-jsons
+data:
+    config: |
+    [
+      {
+        "path": "/read",
+        "url": "http://localhost:8081"
+      },
+      {
+        "path": "/write",
+        "url": "http://localhost:8082"
+      }
+    ]

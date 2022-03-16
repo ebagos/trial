@@ -1,10 +1,10 @@
 [
     {
         "path": "/read",
-        "url": "http://localhost:8081/"
+        "url": "http://read:8081"
     },
     {
         "path": "/write",
-        "url": "http://localhost:8082/"
+        "url": "http://write:8082"
     }
 ]

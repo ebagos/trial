@@ -24,16 +24,18 @@ type configType struct {
 
 func main() {
 	// 環境変数から自サーバのポート番号を得る
-	myPort := os.Getenv("portLabel")
+	myPort := os.Getenv(portLabel)
 	if myPort == "" {
 		myPort = ":8080"
 	}
+	log.Println("myPort")
 	// 環境変数からコンフィグファイルのパスを得る
 	configFile := os.Getenv(configFileLabel)
 	if configFile == "" {
 		configFile = configFileDefault
 	}
 	// configFile読み込み
+	log.Println("configFile :", configFile)
 	data, err := ioutil.ReadFile(configFile)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -44,6 +46,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+	log.Println("configData :", configData)
 
 	// リバースプロキシとして動作させる部分（実はもう少し考えないと遅い？）
 	reverseProxy := new(httputil.ReverseProxy)
@@ -54,11 +57,16 @@ func main() {
 				if err != nil {
 					log.Fatal("parse url:", err)
 				}
-				req.URL.Scheme = "http"
+				log.Println("target", target)
+				req.URL.Scheme = target.Scheme
 				req.URL.Host = target.Host
+				req.Host = target.Host
+				log.Println("redirect to :", target)
 			}
 		}
 	}
+
+	log.Println("myPort: ", myPort)
 
 	err = http.ListenAndServe(myPort, reverseProxy)
 	if err != nil {

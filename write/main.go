@@ -2,19 +2,27 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"strings"
-	"time"
 )
 
-const (
-	WAIT = 5
-)
+var dbURL string = "http://db:8083/write"
 
 func handler(w http.ResponseWriter, r *http.Request) {
-	time.Sleep(WAIT * time.Second)
-	fmt.Fprintf(w, "Hello Write World")
+	res, err := http.Get(dbURL)
+	if err != nil {
+		log.Fatal("write http error :", err)
+	}
+	defer res.Body.Close()
+
+	byteArray, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal("write readAll: ", err)
+	}
+	fmt.Fprintf(w, "%s", string(byteArray))
 }
 
 func main() {
@@ -22,7 +30,11 @@ func main() {
 	if myPort == "" {
 		myPort = ":8082"
 	}
-	if strings.HasPrefix(myPort, ":") == false {
+	dburl := os.Getenv("DB_URL")
+	if dburl != "" {
+		dbURL = dburl
+	}
+	if !strings.HasPrefix(myPort, ":") {
 		myPort = ":" + myPort
 	}
 	http.HandleFunc("/", handler)
