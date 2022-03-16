@@ -17,7 +17,7 @@ jobs:
   build_and_push:
     strategy:
       matrix:
-        target: [gateway, read, write]
+        target: [gateway, read, write, db]
         os: [ubuntu-latest]
     runs-on: ubuntu-latest
     steps:
