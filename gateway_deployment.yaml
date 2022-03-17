@@ -19,7 +19,7 @@ spec:
         image: ghcr.io/ebagos/trial/gateway
         env:
         - name: PORT
-          value: "8080"
+          value: ":8080"
 #        - name: CONFIG_FILE
 #          value: "/setting/config.json"
 #        volumeMounts:
