@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  db:
+  db-svc:
     container_name: db
     build:
       context: ./db
@@ -13,9 +13,9 @@ services:
     ports:
       - "80:80"
 
-  read:
+  read-svc:
     depends_on:
-      - db
+      - db-svc
     container_name: read
     build:
       context: ./read
@@ -27,9 +27,9 @@ services:
     ports:
       - "8081:8081"
 
-  write:
+  write-svc:
     depends_on:
-      - db
+      - db-svc
     container_name: write
     build:
       context: ./write
@@ -41,10 +41,10 @@ services:
     ports:
       - "8082:8082"
 
-  gateway:
+  gateway-svc:
     depends_on:
-      - read
-      - write
+      - read-svc
+      - write-svc
     container_name: gateway
     build:
       context: ./gateway
