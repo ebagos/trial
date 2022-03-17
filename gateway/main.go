@@ -28,7 +28,7 @@ func main() {
 	if myPort == "" {
 		myPort = ":8080"
 	}
-	log.Println("myPort")
+	log.Println("myPort", myPort)
 	// 環境変数からコンフィグファイルのパスを得る
 	configFile := os.Getenv(configFileLabel)
 	if configFile == "" {

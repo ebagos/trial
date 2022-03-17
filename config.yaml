@@ -7,10 +7,10 @@ data:
     [
       {
         "path": "/read",
-        "url": "http://localhost:8081"
+        "url": "http://read-svc:8081"
       },
       {
         "path": "/write",
-        "url": "http://localhost:8082"
+        "url": "http://write-svc:8082"
       }
     ]
