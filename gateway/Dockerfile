@@ -8,5 +8,6 @@ RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w" -o /outputs/
 FROM alpine:3.15
 WORKDIR /app
 COPY --from=build /outputs/gateway .
+COPY ./config.json .
 ENTRYPOINT ["/app/gateway"]
 EXPOSE 8080

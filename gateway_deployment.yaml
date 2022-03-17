@@ -19,22 +19,22 @@ spec:
         image: ghcr.io/ebagos/trial/gateway
         env:
         - name: PORT
-          value: 8080
-        - name: CONFIG_FILE
-          value: "/setting/config.json"
-        volumeMounts:
-        - name: config
-          mountPath: "/setting"
-          readOnly: true
+          value: "8080"
+#        - name: CONFIG_FILE
+#          value: "/setting/config.json"
+#        volumeMounts:
+#        - name: config
+#          mountPath: "/setting"
+#          readOnly: true
         ports:
         - containerPort: 8080
-      volumes:
-      - name: config
-        configMap:
-          name: config-jsons
-          items:
-          - key: config
-            path: config.json
+#      volumes:
+#      - name: config
+#        configMap:
+#          name: config-jsons
+#          items:
+#          - key: config
+#            path: config.json
 ---
 apiVersion: v1
 kind: Service
