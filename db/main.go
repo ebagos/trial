@@ -5,15 +5,19 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"syscall"
 	"time"
 )
 
-const MSEC = 1000
+const MSEC_DEFAULT = 5000
 
-var lockPath string
-var LOCK_PATH_DEFAULT = "locker"
+var (
+	lockPath          string
+	LOCK_PATH_DEFAULT = "locker"
+	msec              int
+)
 
 func readHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello Read World")
@@ -25,7 +29,7 @@ func writeHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Error from Write World: %v", err)
 		return
 	}
-	time.Sleep(time.Millisecond * MSEC)
+	time.Sleep(time.Millisecond * time.Duration(msec))
 	err = unlock(fd, lockPath)
 	if err != nil {
 		fmt.Fprintf(w, "Error from Write World: %v", err)
@@ -45,6 +49,11 @@ func main() {
 	lockPath = os.Getenv("LOCK_FILE")
 	if lockPath == "" {
 		lockPath = LOCK_PATH_DEFAULT
+	}
+	msecStr := os.Getenv("WAIT_MSEC")
+	msec, err := strconv.Atoi(msecStr)
+	if err != nil || msec == 0 {
+		msec = MSEC_DEFAULT
 	}
 	http.HandleFunc("/read", readHandler)
 	http.HandleFunc("/write", writeHandler)
